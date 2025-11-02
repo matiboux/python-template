@@ -17,17 +17,16 @@
 # -- Editor rules:
 
 # VS Code
-**/.vscode/**/*
-!**/.vscode/extensions.json
+**/.vscode/
 
 # Jetbrains
 **/.idea/
 
 # Other
-**/*.suo
-**/*.ntvs*
 **/*.njsproj
+**/*.ntvs*
 **/*.sln
+**/*.suo
 **/*.sw?
 
 # -- Application rules:
@@ -51,5 +50,4 @@ data/
 
 # Docker configuration files
 Dockerfile
-docker-compose.yml
-docker-compose.*.yml
+docker-compose*.yml
