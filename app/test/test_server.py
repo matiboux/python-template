@@ -4,7 +4,7 @@ import time
 import httpx
 import os
 from http.server import ThreadingHTTPServer
-from app.app.main import HelloHandler
+from app.main import HelloHandler
 
 def run_server(port):
     httpd = ThreadingHTTPServer(('127.0.0.1', port), HelloHandler)
