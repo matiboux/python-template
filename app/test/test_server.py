@@ -1,3 +1,5 @@
+"""Tests for the HTTP server."""
+
 import os
 import threading
 import time
@@ -8,11 +10,12 @@ import pytest
 from app.main import create_server
 
 TEST_PORT = int(os.environ.get('TEST_PORT', '8081'))
+HTTP_OK = 200
 
 
 @pytest.fixture(scope="module", autouse=True)
-def start_server():
-	# Set the port for the test
+def start_server() -> None:
+	"""Pytest fixture to start and stop the HTTP server for tests."""
 	httpd = create_server(TEST_PORT)
 	server_thread = threading.Thread(target=httpd.serve_forever)
 	server_thread.start()
@@ -22,7 +25,12 @@ def start_server():
 	server_thread.join()
 
 
-def test_hello_world():
+def test_hello_world() -> None:
+	"""Test that the HTTP server responds with 'Hello, world!' and status 200."""
 	response = httpx.get(f'http://127.0.0.1:{TEST_PORT}/')
-	assert response.status_code == 200
-	assert response.text == 'Hello, world!'
+	if response.status_code != HTTP_OK:
+		msg = f"Expected status {HTTP_OK}, got {response.status_code}"
+		raise AssertionError(msg)
+	if response.text != 'Hello, world!':
+		msg = f"Expected body 'Hello, world!', got {response.text!r}"
+		raise AssertionError(msg)
