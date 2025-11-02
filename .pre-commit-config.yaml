@@ -1,7 +1,37 @@
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+
+  - repo: local
     hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
+
+      # Run the ruff linter (https://docs.astral.sh/ruff).
+      - id: ruff-check
+        name: ruff check (local)
+        entry: >
+          docker compose
+          -f ./docker-compose-cli.yml
+          --env-file ./.env --env-file ./.env.cli
+          run --rm cli ruff check --fix ..
+        language: system
+        types_or: [ python, pyi ]
+
+      # Run the ruff formatter (https://docs.astral.sh/ruff).
+      - id: ruff-format
+        name: ruff format (local)
+        entry: >
+          docker compose
+          -f ./docker-compose-cli.yml
+          --env-file ./.env --env-file ./.env.cli
+          run --rm cli ruff format ..
+        language: system
+        types_or: [ python, pyi ]
+
+      # Run the ty type checker (https://docs.astral.sh/ty).
+      - id: ty-check
+        name: ty check (local)
+        entry: >
+          docker compose
+          -f ./docker-compose-cli.yml
+          --env-file ./.env --env-file ./.env.cli
+          run --rm cli ty check ..
+        language: system
+        types_or: [ python, pyi ]
