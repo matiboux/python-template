@@ -1,23 +1,20 @@
-
 import threading
 import time
 import httpx
 import os
 import pytest
-from app.main import HelloHandler
-from http.server import ThreadingHTTPServer
+from app.main import main
 
 
 @pytest.fixture(scope="module", autouse=True)
 def start_server():
-    port = int(os.environ.get("TEST_PORT", "8081"))
-    httpd = ThreadingHTTPServer(("127.0.0.1", port), HelloHandler)
-    server_thread = threading.Thread(target=httpd.serve_forever)
+    # Set the port for the test
+    os.environ["PORT"] = os.environ.get("TEST_PORT", "8081")
+    server_thread = threading.Thread(target=main, daemon=True)
     server_thread.start()
     time.sleep(0.5)  # Give server time to start
     yield
-    httpd.shutdown()
-    server_thread.join()
+    # No explicit shutdown since daemon=True
 
 def test_hello_world():
     port = int(os.environ.get('TEST_PORT', '8081'))
