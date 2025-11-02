@@ -4,14 +4,37 @@ version = "0.1.0"
 description = "Template project for a Python web application."
 requires-python = ">=3.14"
 authors = [
-  {name = "Matiboux", email = "matiboux@gmail.com"},
+	{name = "Matiboux", email = "matiboux@gmail.com"},
 ]
 maintainers = [
-  {name = "Matiboux", email = "matiboux@gmail.com"},
+	{name = "Matiboux", email = "matiboux@gmail.com"},
 ]
 dependencies = []
 
 [dependency-groups]
 dev = [
-    "ruff>=0.14.3",
+	"ruff>=0.14.3",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# TODO: Include more rules as the codebase matures
+# (e.g. N (naming), C90 (complexity), S (security), and eventually ALL)
+select = ["F", "E", "W", "I"]
+ignore = ["E501", "W191"]
+fixable = ["ALL"]
+unfixable = []
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "data_init", "test"]
+known-third-party = ["minio"]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+skip-magic-trailing-comma = false
+line-ending = "lf"
