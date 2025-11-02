@@ -1,6 +1,6 @@
 def main():
     import os
-    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
     class HelloHandler(BaseHTTPRequestHandler):
         def do_GET(self):
@@ -10,7 +10,7 @@ def main():
             self.wfile.write(b'Hello, world!')
 
     http_port = int(os.getenv('PORT', '8080'))
-    httpd = HTTPServer(('0.0.0.0', http_port), HelloHandler)
+    httpd = ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
     print(f"Serving HTTP on 0.0.0.0 port {http_port} (http://0.0.0.0:{http_port}/) ...")
     print(f"Open http://localhost:{http_port} locally in your browser.")
     httpd.serve_forever()
