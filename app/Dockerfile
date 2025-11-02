@@ -173,7 +173,7 @@ EXPOSE ${PORT}
 # Healthcheck script
 COPY --link --chmod=755 ./docker/healthcheck.py /usr/local/bin/app-healthcheck
 
-CMD [ "sh", "-c", "uvicorn main:app --host '0.0.0.0' --port \"${PORT}\" --reload" ]
+CMD [ "sh", "-c", "python main.py" ]
 
 
 # --
@@ -204,4 +204,4 @@ EXPOSE ${PORT}
 # Healthcheck script
 COPY --link --chmod=755 ./docker/healthcheck.py /usr/local/bin/app-healthcheck
 
-CMD [ "sh", "-c", "uvicorn main:app --host '0.0.0.0' --port \"${PORT}\"" ]
+CMD [ "sh", "-c", "python main.py" ]
