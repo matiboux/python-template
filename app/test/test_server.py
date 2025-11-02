@@ -30,17 +30,28 @@ def start_server() -> Iterator[None]:
 
 
 def test_create_server() -> None:
-	"""Test that the create_server function creates a server on the specified port."""
+	"""Test the create_server function with specified port.
+
+	Test that the create_server function creates a server on the specified port.
+	"""
 	random_port = TEST_PORT + 1
 	server = create_server(random_port)
-	assert server.server_address[1] == random_port, f"Expected port {random_port}, got {server.server_address[1]}"
+	assert server.server_address[1] == random_port, (  # noqa: S101
+		f"Expected port {random_port}, got {server.server_address[1]}"
+	)
 
 
 def test_create_server_env() -> None:
-	"""Test that the create_server function creates a server on the port from environment variable."""
+	"""Test the create_server function with port from environment variable.
+
+	Test that the create_server function creates a server on the port specified in the PORT
+	environment variable.
+	"""
 	env_port = int(os.environ.get('PORT', '8080'))
 	server = create_server()
-	assert server.server_address[1] == env_port, f"Expected port {env_port}, got {server.server_address[1]}"
+	assert server.server_address[1] == env_port, (  # noqa: S101
+		f"Expected port {env_port}, got {server.server_address[1]}"
+	)
 
 
 def test_hello_world() -> None:
