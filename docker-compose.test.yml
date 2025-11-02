@@ -1,0 +1,25 @@
+# Services overrides for testing
+
+x-common:
+
+  app-environment: &app-environment
+    COVERAGE_THRESHOLD: ${TEST_COVERAGE_THRESHOLD_APP:-}
+
+services:
+
+  # Inherited
+  app:
+    # Build override
+    image: ${IMAGES_PREFIX:-app}-test-app:${IMAGES_TAG:-latest}
+    build:
+      target: app_test
+      args:
+        UID: ${DOCKER_UID:-${UID:-1000}}
+    # Deploy override
+    user: ${DOCKER_UID:-${UID:-1000}}
+    environment:
+      <<: [ *app-environment ]
+    tmpfs:
+      - /tmp:mode=1777,exec,uid=${DOCKER_UID:-${UID:-1000}},gid=0
+    healthcheck: !reset null
+    ports: !reset null

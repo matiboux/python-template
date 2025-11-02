@@ -152,12 +152,65 @@ COPY --from=deps_dev --link --chmod=755 /opt/venv /opt/venv
 RUN chown "${UID}:0" .
 COPY --link --chown="${UID}:0" ./app/ ./
 COPY --link --chown="${UID}:0" ./docker ../docker
+COPY --link --chown="${UID}:0" ./test ../test
 
 # Run as non-root user
 USER ${UID}:0
 
 COPY --link --chmod=755 ./docker/lint-command.sh /usr/local/bin/app-lint-command
 CMD [ "app-lint-command" ]
+
+
+# --
+# Python jq base image
+
+FROM python_base AS python_jq_base
+
+# Install jq
+# (hadolint: Ignore non-pinned apt package version)
+# hadolint ignore=DL3008
+RUN --mount=type=cache,sharing=locked,id=apt-cache,target=/var/cache/apt \
+	--mount=type=cache,sharing=locked,id=apt-lib,target=/var/lib/apt \
+	apt-get update && \
+	apt-get install -y --no-install-recommends jq
+
+
+# --
+# Test base image
+
+FROM python_jq_base AS app_test_base
+
+# Build arguments
+ARG UID
+
+# Set runtime environment
+ENV APP_ENV=test
+
+# Copy test virtual environment
+COPY --from=deps_dev --link --chmod=755 /opt/venv /opt/venv
+
+# Copy data & source code
+RUN chown "${UID}:0" .
+COPY --link --chown="${UID}:0" ./app/ ./
+COPY --link --chown="${UID}:0" ./test ./test
+
+
+# --
+# Test image
+
+FROM app_test_base AS app_test
+
+# Build arguments
+ARG UID
+
+# Run as non-root user
+USER ${UID}:0
+
+# Mount data as volume
+VOLUME /data
+
+COPY --link --chmod=755 ./docker/test-command.sh /usr/local/bin/app-test-command
+CMD [ "app-test-command" ]
 
 
 # --
