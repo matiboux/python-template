@@ -214,6 +214,37 @@ CMD [ "app-test-command" ]
 
 
 # --
+# Test watch image
+
+FROM app_test_base AS app_test_watch
+
+# Build arguments
+ARG UID
+
+# Copy test-watch virtual environment
+COPY --from=deps_dev --link --chmod=755 /opt/venv /opt/venv
+
+# Create user 'user' in group 'root'
+# (hadolint: Ignore unchecked pipe failures)
+# hadolint ignore=DL4006
+RUN USERNAME="$(getent passwd "${UID}" 2>/dev/null | cut -d: -f1 || true)"; \
+	if [ -z "${USERNAME}" ]; then \
+		useradd -lm -u "${UID}" -U -G 0 user; \
+	else \
+		usermod -a -G 0 "${USERNAME}"; \
+	fi
+
+# Run as created non-root user
+USER ${UID}
+
+# Mount data as volume
+VOLUME /data
+
+COPY --link --chmod=755 ./docker/test-watch-command.sh /usr/local/bin/app-test-watch-command
+CMD [ "app-test-watch-command" ]
+
+
+# --
 # Dev image
 
 FROM python_base AS app_dev
