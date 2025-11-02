@@ -10,9 +10,11 @@ repos:
           docker compose
           -f ./docker-compose-cli.yml
           --env-file ./.env --env-file ./.env.cli
-          run --rm cli ruff check --fix ..
+          run --rm app
+          run ruff check --fix ..
         language: system
         types_or: [ python, pyi ]
+        pass_filenames: false
 
       # Run the ruff formatter (https://docs.astral.sh/ruff).
       - id: ruff-format
@@ -21,9 +23,11 @@ repos:
           docker compose
           -f ./docker-compose-cli.yml
           --env-file ./.env --env-file ./.env.cli
-          run --rm cli ruff format ..
+          run --rm --entrypoint ruff app
+          format ..
         language: system
         types_or: [ python, pyi ]
+        pass_filenames: false
 
       # Run the ty type checker (https://docs.astral.sh/ty).
       - id: ty-check
@@ -32,6 +36,8 @@ repos:
           docker compose
           -f ./docker-compose-cli.yml
           --env-file ./.env --env-file ./.env.cli
-          run --rm cli ty check ..
+          run --rm app
+          run ty check ..
         language: system
         types_or: [ python, pyi ]
+        pass_filenames: false
