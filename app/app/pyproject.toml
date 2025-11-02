@@ -23,12 +23,14 @@ line-length = 100
 # See https://docs.astral.sh/ruff/rules/
 select = ["ALL"]
 # Ignore rules:
-# - W191 (tab-indentation) because we use tabs for indentation
+# - COM812 (missing-trailing-comma) conflicts with the formatter
 # - D203 (incorrect-blank-line-before-class) to enable D211 (blank-line-before-class)
 # - D206 (docstring-tab-indentation) because we use tabs for indentation
 # - D213 (multi-line-summary-second-line) to enable D212 (multi-line-summary-first-line)
-# - COM812 (missing-trailing-comma) conflicts with the formatter
-ignore = ["W191", "D203", "D206", "D213", "COM812"]
+# - Q000 (bad-quotes-inline-string) conflicts with quote-style configuration
+# - S104 (hardcoded-bind-all-interfaces) prevents host binding within a Docker container
+# - W191 (tab-indentation) conflicts with tab indentation style
+ignore = ["COM812", "D203", "D206", "D213", "Q000", "S104", "W191"]
 fixable = ["ALL"]
 unfixable = []
 # Allow unused variables when underscore-prefixed.
