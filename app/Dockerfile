@@ -135,6 +135,32 @@ CMD [ "--help" ]
 
 
 # --
+# Lint image
+
+FROM python_base AS app_lint
+
+# Build arguments
+ARG UID
+
+# Set runtime environment
+ENV APP_ENV=test
+
+# Copy lint virtual environment
+COPY --from=deps_dev --link --chmod=755 /opt/venv /opt/venv
+
+# Copy source code
+RUN chown "${UID}:0" .
+COPY --link --chown="${UID}:0" ./app/ ./
+COPY --link --chown="${UID}:0" ./docker ../docker
+
+# Run as non-root user
+USER ${UID}:0
+
+COPY --link --chmod=755 ./docker/lint-command.sh /usr/local/bin/app-lint-command
+CMD [ "app-lint-command" ]
+
+
+# --
 # Dev image
 
 FROM python_base AS app_dev
