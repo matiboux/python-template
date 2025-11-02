@@ -26,6 +26,13 @@ omit = [
 	"./test/*",
 ]
 
+[tool.coverage.report]
+# See https://coverage.readthedocs.io/en/7.11.0/excluding.html#advanced-exclusion
+exclude_also = [
+    'if __name__ == .__main__.:',
+    'def main\(\) -> None:',
+]
+
 [tool.ruff]
 line-length = 100
 
