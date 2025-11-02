@@ -29,6 +29,20 @@ def start_server() -> Iterator[None]:
 	server_thread.join()
 
 
+def test_create_server() -> None:
+	"""Test that the create_server function creates a server on the specified port."""
+	random_port = TEST_PORT + 1
+	server = create_server(random_port)
+	assert server.server_address[1] == random_port, f"Expected port {random_port}, got {server.server_address[1]}"
+
+
+def test_create_server_env() -> None:
+	"""Test that the create_server function creates a server on the port from environment variable."""
+	env_port = int(os.environ.get('PORT', '8080'))
+	server = create_server()
+	assert server.server_address[1] == env_port, f"Expected port {env_port}, got {server.server_address[1]}"
+
+
 def test_hello_world() -> None:
 	"""Test that the HTTP server responds with 'Hello, world!' and status 200."""
 	response = httpx.get(f'http://127.0.0.1:{TEST_PORT}/')
