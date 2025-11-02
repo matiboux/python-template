@@ -6,7 +6,7 @@ import os
 import pytest
 from app.main import create_server
 
-TEST_PORT = int(os.environ.get("TEST_PORT", "8081"))
+TEST_PORT = int(os.environ.get('TEST_PORT', '8081'))
 
 
 @pytest.fixture(scope="module", autouse=True)

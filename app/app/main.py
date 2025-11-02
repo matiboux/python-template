@@ -5,7 +5,6 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
-
 class HelloHandler(BaseHTTPRequestHandler):
 	"""Request handler that responds with 'Hello, world!' to all GET requests."""
 
@@ -17,7 +16,7 @@ class HelloHandler(BaseHTTPRequestHandler):
 		self.wfile.write(b'Hello, world!')
 
 
-def create_server(port: int = None) -> ThreadingHTTPServer:
+def create_server(port: int | None = None) -> ThreadingHTTPServer:
 	"""Create and return a configured ThreadingHTTPServer instance."""
 	if port is None:
 		port = int(os.environ.get('PORT', '8080'))
