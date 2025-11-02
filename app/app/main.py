@@ -17,10 +17,11 @@ class HelloHandler(BaseHTTPRequestHandler):
 		self.wfile.write(b'Hello, world!')
 
 
-def create_server() -> ThreadingHTTPServer:
+def create_server(port: int = None) -> ThreadingHTTPServer:
 	"""Create and return a configured ThreadingHTTPServer instance."""
-	http_port = int(os.environ.get('PORT', '8080'))
-	return ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
+	if port is None:
+		port = int(os.environ.get('PORT', '8080'))
+	return ThreadingHTTPServer(('0.0.0.0', port), HelloHandler)
 
 
 def main() -> None:

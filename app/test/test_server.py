@@ -1,3 +1,4 @@
+
 import threading
 import time
 import httpx
@@ -5,12 +6,13 @@ import os
 import pytest
 from app.main import create_server
 
+TEST_PORT = int(os.environ.get("TEST_PORT", "8081"))
+
 
 @pytest.fixture(scope="module", autouse=True)
 def start_server():
     # Set the port for the test
-    os.environ["PORT"] = os.environ.get("TEST_PORT", "8081")
-    httpd = create_server()
+    httpd = create_server(TEST_PORT)
     server_thread = threading.Thread(target=httpd.serve_forever)
     server_thread.start()
     time.sleep(0.5)  # Give server time to start
@@ -19,7 +21,6 @@ def start_server():
     server_thread.join()
 
 def test_hello_world():
-    port = int(os.environ.get('TEST_PORT', '8081'))
-    response = httpx.get(f'http://127.0.0.1:{port}/')
+    response = httpx.get(f'http://127.0.0.1:{TEST_PORT}/')
     assert response.status_code == 200
     assert response.text == 'Hello, world!'
