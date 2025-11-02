@@ -22,9 +22,7 @@ def main() -> None:
 	logger = logging.getLogger(__name__)
 	http_port = int(os.getenv('PORT', '8080'))
 	httpd = ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
-	logger.info(
-		"Serving HTTP on 0.0.0.0 port %d (http://0.0.0.0:%d/) ...", http_port, http_port
-	)
+	logger.info("Serving HTTP on 0.0.0.0 port %d (http://0.0.0.0:%d/) ...", http_port, http_port)
 	logger.info("Open http://localhost:%d locally in your browser.", http_port)
 	httpd.serve_forever()
 
