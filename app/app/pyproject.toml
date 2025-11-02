@@ -20,10 +20,15 @@ dev = [
 line-length = 100
 
 [tool.ruff.lint]
-# TODO: Include more rules as the codebase matures
-# (e.g. N (naming), C90 (complexity), S (security), and eventually ALL)
-select = ["F", "E", "W", "I"]
-ignore = ["E501", "W191"]
+# See https://docs.astral.sh/ruff/rules/
+select = ["ALL"]
+# Ignore rules:
+# - W191 (tab-indentation) because we use tabs for indentation
+# - D203 (incorrect-blank-line-before-class) to enable D211 (blank-line-before-class)
+# - D206 (docstring-tab-indentation) because we use tabs for indentation
+# - D213 (multi-line-summary-second-line) to enable D212 (multi-line-summary-first-line)
+# - COM812 (missing-trailing-comma) conflicts with the formatter
+ignore = ["W191", "D203", "D206", "D213", "COM812"]
 fixable = ["ALL"]
 unfixable = []
 # Allow unused variables when underscore-prefixed.
@@ -35,6 +40,7 @@ known-third-party = ["minio"]
 
 [tool.ruff.format]
 quote-style = "preserve"
+docstring-code-format = true
 indent-style = "tab"
 skip-magic-trailing-comma = false
 line-ending = "lf"
