@@ -3,6 +3,10 @@
 import os
 import threading
 import time
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from collections.abc import Iterator
 
 import httpx
 import pytest
@@ -14,7 +18,7 @@ HTTP_OK = 200
 
 
 @pytest.fixture(scope="module", autouse=True)
-def start_server() -> None:
+def start_server() -> Iterator[None]:
 	"""Pytest fixture to start and stop the HTTP server for tests."""
 	httpd = create_server(TEST_PORT)
 	server_thread = threading.Thread(target=httpd.serve_forever)
