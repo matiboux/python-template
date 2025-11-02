@@ -24,10 +24,10 @@ Thumbs.db
 .idea/
 
 # Other
-*.suo
-*.ntvs*
 *.njsproj
+*.ntvs*
 *.sln
+*.suo
 *.sw?
 
 # -- Application rules:
@@ -40,15 +40,6 @@ __pycache__/
 .venv/
 .coverage
 cov.json
-
-# Node
-node_modules/
-dist/
-dist-ssr/
-.vite/
-
-# SQLite
-db.sqlite
 
 # -- Service rules:
 
