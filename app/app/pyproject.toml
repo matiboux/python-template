@@ -1,7 +1,12 @@
 [project]
-name = "app"
+name = "python-template"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "Template project for a Python web application."
 requires-python = ">=3.14"
+authors = [
+  {name = "Matiboux", email = "matiboux@gmail.com"},
+]
+maintainers = [
+  {name = "Matiboux", email = "matiboux@gmail.com"},
+]
 dependencies = []
