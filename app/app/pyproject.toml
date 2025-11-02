@@ -34,7 +34,7 @@ known-first-party = ["app", "data_init", "test"]
 known-third-party = ["minio"]
 
 [tool.ruff.format]
-quote-style = "single"
+quote-style = "preserve"
 indent-style = "tab"
 skip-magic-trailing-comma = false
 line-ending = "lf"
