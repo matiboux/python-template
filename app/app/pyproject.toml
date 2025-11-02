@@ -20,6 +20,12 @@ dev = [
 	"ruff>=0.14.3",
 ]
 
+[tool.coverage.run]
+omit = [
+	# Omit test files
+	"./test/*",
+]
+
 [tool.ruff]
 line-length = 100
 
