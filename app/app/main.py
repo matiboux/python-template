@@ -20,7 +20,7 @@ def main() -> None:
 	"""Start a threaded HTTP server that responds with 'Hello, world!' to all GET requests."""
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
-	http_port = int(os.getenv('PORT', '8080'))
+	http_port = int(os.environ.get('PORT', '8080'))
 	httpd = ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
 	logger.info("Serving HTTP on 0.0.0.0 port %d (http://0.0.0.0:%d/) ...", http_port, http_port)
 	logger.info("Open http://localhost:%d locally in your browser.", http_port)
