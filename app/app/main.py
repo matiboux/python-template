@@ -5,6 +5,7 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
+
 class HelloHandler(BaseHTTPRequestHandler):
 	"""Request handler that responds with 'Hello, world!' to all GET requests."""
 
@@ -16,14 +17,20 @@ class HelloHandler(BaseHTTPRequestHandler):
 		self.wfile.write(b'Hello, world!')
 
 
+def create_server() -> ThreadingHTTPServer:
+	"""Create and return a configured ThreadingHTTPServer instance."""
+	http_port = int(os.environ.get('PORT', '8080'))
+	return ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
+
+
 def main() -> None:
 	"""Start a threaded HTTP server that responds with 'Hello, world!' to all GET requests."""
 	logging.basicConfig(level=logging.INFO)
 	logger = logging.getLogger(__name__)
-	http_port = int(os.environ.get('PORT', '8080'))
-	httpd = ThreadingHTTPServer(('0.0.0.0', http_port), HelloHandler)
-	logger.info("Serving HTTP on 0.0.0.0 port %d (http://0.0.0.0:%d/) ...", http_port, http_port)
-	logger.info("Open http://localhost:%d locally in your browser.", http_port)
+	httpd = create_server()
+	port = httpd.server_address[1]
+	logger.info("Serving HTTP on 0.0.0.0 port %d (http://0.0.0.0:%d/) ...", port, port)
+	logger.info("Open http://localhost:%d locally in your browser.", port)
 	httpd.serve_forever()
 
 
