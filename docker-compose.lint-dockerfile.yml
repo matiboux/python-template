@@ -1,0 +1,13 @@
+# Services overrides for linting Dockerfiles
+
+services:
+
+  # Inherited
+  app: !override
+    # Extends
+    extends:
+      file: ./docker/docker-compose-lint-dockerfile.yml
+      service: lint-dockerfile
+    # Build override
+    volumes:
+      - ./app/Dockerfile:/app/Dockerfile
