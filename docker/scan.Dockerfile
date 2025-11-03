@@ -24,7 +24,8 @@ SHELL [ "/bin/ash", "-o", "pipefail", "-c" ]
 # Set runtime environment
 ENV APP_ENV=test
 
-# Install trivy
+# Install Trivy
+# (see Trivy releases: https://github.com/aquasecurity/trivy/releases)
 # (hadolint: Ignore non-pinned apk package version, because repository updates discard previous versions)
 # hadolint ignore=DL3018
 RUN --mount=type=cache,id=apk,target=/var/cache/apk \
@@ -52,7 +53,8 @@ SHELL [ "/bin/ash", "-o", "pipefail", "-c" ]
 # Set runtime environment
 ENV APP_ENV=test
 
-# Install trivy
+# Install Trivy
+# (see Trivy releases: https://github.com/aquasecurity/trivy/releases)
 # (hadolint: Ignore non-pinned apk package version, because repository updates discard previous versions)
 # hadolint ignore=DL3018
 RUN --mount=type=cache,id=apk,target=/var/cache/apk \
