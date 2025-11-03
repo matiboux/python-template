@@ -12,6 +12,8 @@ ARG UID=1001
 # --
 # Upstream images
 
+# (see uv releases: https://github.com/astral-sh/uv/releases)
+
 FROM python:3.14-slim AS python_upstream
 FROM ghcr.io/astral-sh/uv:0.9 AS python_uv_upstream
 
