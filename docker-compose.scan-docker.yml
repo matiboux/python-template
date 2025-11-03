@@ -1,0 +1,16 @@
+# Services overrides for scanning Docker images
+
+name: python-template-scan-docker
+
+services:
+
+  # Inherited
+  app: !override
+    # Extends
+    extends:
+      file: ./docker/docker-compose-scan-docker.yml
+      service: scan-docker
+    # Deploy override
+    environment: !override
+      DOCKER_COMPOSE_FILES: '-f docker-compose.yml'
+      DOCKER_COMPOSE_SERVICE: 'app'
