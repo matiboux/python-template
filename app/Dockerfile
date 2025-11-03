@@ -19,7 +19,7 @@ FROM ghcr.io/astral-sh/uv:0.9 AS python_uv_upstream
 
 
 # --
-# Base image
+# Python base stage
 
 FROM python_upstream AS python_base
 
@@ -37,7 +37,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 
 # --
-# Build base image
+# Python build base stage
 
 FROM python_base AS python_build_base
 
@@ -54,7 +54,7 @@ RUN --mount=type=cache,sharing=locked,id=apt-cache,target=/var/cache/apt \
 
 
 # --
-# Install base image
+# Deps base stage
 
 FROM python_build_base AS deps_base
 
@@ -63,7 +63,7 @@ COPY --link ./app/pyproject.toml ./app/uv.lock ./
 
 
 # --
-# Install dev base image
+# Deps dev stage
 
 FROM deps_base AS deps_dev
 
@@ -77,7 +77,7 @@ RUN --mount=type=cache,id=uv,target=/tmp/uv-cache \
 
 
 # --
-# Install prod base image
+# Deps prod stage
 
 FROM deps_base AS deps_prod
 
@@ -164,7 +164,7 @@ CMD [ "app-lint-command" ]
 
 
 # --
-# Python jq base image
+# Python jq base stage
 
 FROM python_base AS python_jq_base
 
@@ -178,7 +178,7 @@ RUN --mount=type=cache,sharing=locked,id=apt-cache,target=/var/cache/apt \
 
 
 # --
-# Test base image
+# Test base stage
 
 FROM python_jq_base AS app_test_base
 
