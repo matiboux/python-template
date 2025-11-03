@@ -1,0 +1,17 @@
+# Services overrides for scanning filesystems
+
+name: python-template-scan-fs
+
+services:
+
+  # Inherited
+  app: !override
+    # Build override
+    image: ${IMAGES_PREFIX:-app}-scan-fs:${IMAGES_TAG:-latest}
+    build:
+      context: ./docker
+      dockerfile: ./scan.Dockerfile
+      target: app_scan_fs
+    # Deploy override
+    volumes:
+      - ./app:/app

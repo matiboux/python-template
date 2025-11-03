@@ -1,0 +1,51 @@
+# Pre-commit configuration file
+
+# Install pre-commit in your git repository with:
+#   uvx pre-commit install
+
+# Run pre-commit hooks manually with:
+#   uvx pre-commit run --all-files
+
+repos:
+
+  - repo: local
+    hooks:
+
+      # Run the ruff linter (https://docs.astral.sh/ruff).
+      - id: app-checks
+        name: app-checks (ruff, ty)
+        entry: >
+          docker compose
+          -f ./docker-compose-cli.yml
+          --env-file ./.env --env-file ./.env.cli
+          run --rm --entrypoint 'bash -c' app
+          'ruff check --fix .. && ruff format .. && ty check ..'
+        language: system
+        types_or: [ python, pyi ]
+        pass_filenames: false
+
+      # # Run the ruff formatter (https://docs.astral.sh/ruff).
+      # - id: ruff-format
+      #   name: ruff format (local)
+      #   entry: >
+      #     docker compose
+      #     -f ./docker-compose-cli.yml
+      #     --env-file ./.env --env-file ./.env.cli
+      #     run --rm --entrypoint ruff app
+      #     format ..
+      #   language: system
+      #   types_or: [ python, pyi ]
+      #   pass_filenames: false
+
+      # # Run the ty type checker (https://docs.astral.sh/ty).
+      # - id: ty-check
+      #   name: ty check (local)
+      #   entry: >
+      #     docker compose
+      #     -f ./docker-compose-cli.yml
+      #     --env-file ./.env --env-file ./.env.cli
+      #     run --rm app
+      #     run ty check ..
+      #   language: system
+      #   types_or: [ python, pyi ]
+      #   pass_filenames: false

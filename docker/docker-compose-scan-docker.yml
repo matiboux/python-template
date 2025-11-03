@@ -1,0 +1,18 @@
+# Services template for scanning Docker images
+
+services:
+
+  scan-docker:
+    # Build
+    image: ${IMAGES_PREFIX:-app}-scan-docker:${IMAGES_TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./scan.Dockerfile
+      target: app_scan_docker
+    # Deploy
+    # environment:
+    #   DOCKER_COMPOSE_FILES: '-f docker-compose.yml'  # Edit this!
+    #   DOCKER_COMPOSE_SERVICE: 'app'  # Edit this!
+    volumes:
+      - ..:/app
+      - ${DOCKER_SOCKET_PATH:-/var/run/docker.sock}:/var/run/docker.sock

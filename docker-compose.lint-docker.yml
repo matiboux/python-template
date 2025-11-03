@@ -1,0 +1,15 @@
+# Services overrides for linting Dockerfiles
+
+name: python-template-lint-docker
+
+services:
+
+  # Inherited
+  app: !override
+    # Extends
+    extends:
+      file: ./docker/docker-compose-lint-docker.yml
+      service: lint-docker
+    # Build override
+    volumes: !override
+      - ./app/Dockerfile:/app/Dockerfile

@@ -1,6 +1,6 @@
 # Python Template
 
-Template project for a Python application.
+Template project for a Python web application.
 
 Learn more about Python on [python.org](https://www.python.org/).
 
@@ -9,7 +9,7 @@ Learn more about Python on [python.org](https://www.python.org/).
 
 ### Development
 
-Use this command to run the application locally for development:
+Use this command to run the site locally for development:
 
 ```sh
 docker compose watch
@@ -20,9 +20,11 @@ Using `watch`, you'll benefit from file changes watching for sync & rebuild.
 
 Use [DockerC](https://github.com/matiboux/dockerc) for shortened commands: `dockerc - @w`.
 
+The site will be available at [http://localhost:8080](http://localhost:8080).
+
 ### Production
 
-Use this command to run the application locally for production:
+Use this command to run the site locally for production:
 
 ```sh
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
@@ -30,6 +32,8 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 Use [DockerC](https://github.com/matiboux/dockerc) for shortened commands: `dockerc prod`.
+
+The site will be available at [http://localhost:8080](http://localhost:8080).
 
 
 ## License

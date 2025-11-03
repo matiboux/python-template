@@ -1,0 +1,30 @@
+# Services definition override for development
+
+services:
+
+  # Inherited
+  app:
+    # Extend
+    extends:
+      file: ./docker-compose.yml
+      service: app
+    # Build override
+    image: ${IMAGES_PREFIX:-app}-dev-app:${IMAGES_TAG:-latest}
+    build:
+      target: app_dev
+      args:
+        UID: ${DOCKER_UID:-${UID:-1000}}
+    # Deploy override
+    user: ${DOCKER_UID:-${UID:-1000}}
+    develop:
+      watch:
+        # Docker image
+        - action: rebuild
+          path: ./app/Dockerfile
+        # Application build files
+        - action: rebuild
+          path: ./app/app/uv.lock
+        # Application source code
+        - action: sync+restart
+          path: ./app/app
+          target: /workdir/app
