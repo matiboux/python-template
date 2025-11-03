@@ -1,5 +1,7 @@
 # Services overrides for linting Dockerfiles
 
+name: python-template-lint-dockerfile
+
 services:
 
   # Inherited

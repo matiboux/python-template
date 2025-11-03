@@ -1,5 +1,7 @@
 # Services overrides for testing
 
+name: python-template-test
+
 x-common:
 
   app-environment: &app-environment

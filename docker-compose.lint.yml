@@ -1,5 +1,7 @@
 # Services overrides for linting
 
+name: python-template-lint
+
 x-common:
 
   app-lint-environment: &app-lint-environment
