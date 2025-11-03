@@ -1,3 +1,11 @@
+# Pre-commit configuration file
+
+# Install pre-commit in your git repository with:
+#   uvx pre-commit install
+
+# Run pre-commit hooks manually with:
+#   uvx pre-commit run --all-files
+
 repos:
 
   - repo: local
